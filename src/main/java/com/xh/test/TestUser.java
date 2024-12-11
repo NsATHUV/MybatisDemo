@@ -45,10 +45,10 @@ public class TestUser {
     //测试添加10位用户
     public void addTenUserTest() {
         UserDao userDao = new UserDaoImpl();
-        for (int i = 1; i < 12; i++) {
+        for (int i = 11; i < 22; i++) {
             UserBean user = new UserBean();
             user.setId(i);
-            user.setUsername("张" + i);
+            user.setUsername("王" + i);
             user.setAge(18 + i);
             userDao.addUser(user);
         }
@@ -78,5 +78,52 @@ public class TestUser {
         for (UserBean userBean : userBeanList) {
             System.out.println(userBean);
         }
+    }
+
+    @Test
+    /*
+      测试不设置属性值时默认值是什么
+     */
+    public void testDefaultValue() {
+        UserBean u = new UserBean();
+        System.out.println(u);
+//        可以得到默认值是UserBean{id=0, username='null', age=0}
+    }
+
+    @Test
+    public void getUserByUsernameTest() {
+        UserDao userDao = new UserDaoImpl();
+        UserBean userBean = new UserBean();
+        userBean.setId(10);
+        userBean.setAge(55);
+        if (userDao.updateUser_better(userBean)>0) {
+            System.out.println("更新成功");
+            this.getAllUserTest();
+        } else {
+            System.out.println("更新失败");
+        }
+
+    }
+
+    @Test
+    public void getUserByUsernameAndAgeTest() {
+        UserDao userDao = new UserDaoImpl();
+        UserBean userBean = new UserBean();
+        userBean.setAge(0);
+        List<UserBean> userBeanList = userDao.getUserBy_better(userBean);
+        for (UserBean userBean1 : userBeanList) {
+            System.out.println(userBean1);
+        }
+    }
+
+    @Test
+    public void getUser_Fuzzy() {
+        UserDao userDao = new UserDaoImpl();
+        String condition = "%2%";
+        List<UserBean> userBeanList = userDao.getUserBy_Fuzzy(condition);
+        for (UserBean userBean1 : userBeanList) {
+            System.out.println(userBean1);
+        }
+
     }
 }

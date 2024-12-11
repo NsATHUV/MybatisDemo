@@ -16,8 +16,9 @@
     </update>
 
     <delete id="deleteUser">
-        DELETE  FROM user
-        WHERE id=#{id}
+        DELETE
+        FROM user
+        WHERE id = #{id}
     </delete>
 
     <select id="getUserById" parameterType="int" resultType="com.xh.bean.UserBean">
@@ -27,7 +28,35 @@
     </select>
 
     <select id="getUserAll" resultType="com.xh.bean.UserBean">
-        SELECT * FROM user
+        SELECT *
+        FROM user
     </select>
+    <!--动态SQL ⬇-->
+    <update id="updateUser_better" parameterType="com.xh.bean.UserBean">
+        UPDATE user
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="age != 0">age = #{age},</if>
+        </set>
+        WHERE id=#{id}
+    </update>
 
+<select id="getUserBy_better" parameterType="com.xh.bean.UserBean" resultType="com.xh.bean.UserBean">
+    SELECT * FROM user
+    <trim prefix="WHERE" prefixOverrides="AND ">
+        <if test="username!=null">
+            AND username = #{username}
+        </if>
+        <if test="age!=0">
+            AND age = #{age}
+        </if>
+        <if test="id!=0">
+            AND id=#{id}
+        </if>
+    </trim>
+</select>
+    
+    <select id="getUserBy_Fuzzy" resultType="com.xh.bean.UserBean">
+        SELECT * FROM user WHERE username like #{username}
+    </select>
 </mapper>
