@@ -1,6 +1,7 @@
 package com.xh.dao;
 
 import com.xh.bean.UserBean;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -67,4 +68,13 @@ public interface UserDao {
      * @return 列表
      */
     List<UserBean> getUserBy_Fuzzy(String condition);
+
+
+    /**
+     * 根据年龄查询用户信息，但是这个方法主要是为了练习使用注解来实现方法。
+     * @param age 年龄
+     * @return 列表
+     */
+    @Select("SELECT * FROM user WHERE age = #{age}")
+    List<UserBean> getUserByAge(int age);
 }

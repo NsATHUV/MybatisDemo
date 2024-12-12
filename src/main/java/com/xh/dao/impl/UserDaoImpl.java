@@ -220,4 +220,29 @@ public class UserDaoImpl implements UserDao {
         }
         return Collections.emptyList();
     }
+
+    /**
+     * 根据年龄查询用户信息，但是这个方法主要是为了练习使用注解来实现方法。
+     *
+     * @param age 年龄
+     * @return 列表
+     */
+    @Override
+    public List<UserBean> getUserByAge(int age) {
+        try {
+            session = SF.getSession();
+            List<UserBean> userBeanList = session.selectList("getUserByAge", age);
+            session.commit();
+            return userBeanList;
+        } catch (Exception e) {
+            if (session != null) {
+                session.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return Collections.emptyList();
+    }
 }

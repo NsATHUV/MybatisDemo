@@ -117,7 +117,7 @@ public class TestUser {
     }
 
     @Test
-    public void getUser_Fuzzy() {
+    public void getUser_Fuzzy_Test() {
         UserDao userDao = new UserDaoImpl();
         String condition = "%2%";
         List<UserBean> userBeanList = userDao.getUserBy_Fuzzy(condition);
@@ -125,5 +125,16 @@ public class TestUser {
             System.out.println(userBean1);
         }
 
+    }
+
+    @Test
+    //测试注解是否可行
+    public void getUserByAge_Test(){
+        UserDao userDao = new UserDaoImpl();
+        int age = 18;
+        List<UserBean> ub = userDao.getUserByAge(age);
+        for (UserBean userBean1 : ub) {
+            System.out.println(userBean1);
+        }
     }
 }
